@@ -1,8 +1,10 @@
+import './index.css';
+
 function App() {
    return (
-      <>
-         <h1>Virar Eats</h1>
-      </>
+      <div>
+         <h1 className="text-red-600 text-2xl">Hello, World!</h1>
+      </div>
    );
 }
 
