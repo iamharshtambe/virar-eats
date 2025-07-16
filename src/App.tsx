@@ -1,9 +1,10 @@
 import './index.css';
+import Header from './components/Header.tsx';
 
 function App() {
    return (
-      <div>
-         <h1 className="text-red-600 text-2xl">Hello, World!</h1>
+      <div className="max-w-screen-xl mx-auto px-10">
+         <Header />
       </div>
    );
 }
