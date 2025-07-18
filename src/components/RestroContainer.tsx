@@ -16,12 +16,28 @@ type RestroInfo = {
    };
 };
 
+type Restaurants = {
+   data: {
+      cards: {
+         card: {
+            card: {
+               gridElements: {
+                  infoWithStyle: {
+                     restaurants: RestroInfo[];
+                  };
+               };
+            };
+         };
+      }[];
+   };
+};
+
 function RestroContainer() {
    const [listOfRestaurants, setListOfRestaurants] = useState<RestroInfo[]>([]);
 
    async function fetchRestroData() {
       try {
-         const response = await axios.get(
+         const response = await axios.get<Restaurants>(
             'https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.4563596&lng=72.79246119999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING'
          );
 
