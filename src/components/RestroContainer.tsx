@@ -1,6 +1,7 @@
 import RestroCard from './RestroCard.tsx';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Search } from 'lucide-react';
 
 type RestroInfo = {
    info: {
@@ -34,6 +35,10 @@ type Restaurants = {
 
 function RestroContainer() {
    const [listOfRestaurants, setListOfRestaurants] = useState<RestroInfo[]>([]);
+   const [listOfFilteredRestros, setListOfFilteredRestros] = useState<
+      RestroInfo[]
+   >([]);
+   const [searchText, setSearchText] = useState('');
 
    async function fetchRestroData() {
       try {
@@ -42,6 +47,11 @@ function RestroContainer() {
          );
 
          setListOfRestaurants(
+            response?.data?.data?.cards[4]?.card?.card?.gridElements
+               ?.infoWithStyle?.restaurants
+         );
+
+         setListOfFilteredRestros(
             response?.data?.data?.cards[4]?.card?.card?.gridElements
                ?.infoWithStyle?.restaurants
          );
@@ -54,25 +64,50 @@ function RestroContainer() {
       fetchRestroData();
    }, []);
 
-   function handleClick() {
+   function handleTopRatedRestros() {
       const filteredRestros = listOfRestaurants.filter(
          (restro) => restro.info.avgRating > 4.2
       );
 
-      setListOfRestaurants(filteredRestros);
+      setListOfFilteredRestros(filteredRestros);
    }
 
-   return (
+   function handleSearchRestros() {
+      const filteredRestros = listOfRestaurants.filter((restro) =>
+         restro.info.name.toLowerCase().includes(searchText.toLowerCase())
+      );
+
+      setListOfFilteredRestros(filteredRestros);
+   }
+
+   return listOfRestaurants.length === 0 ? (
+      <div className="mt-20">Loading...</div>
+   ) : (
       <>
+         <div className="flex items-center justify-center gap-3">
+            <input
+               type="text"
+               placeholder="Search..."
+               value={searchText}
+               onChange={(e) => setSearchText(e.target.value)}
+               className="w-96 py-1 px-2 border rounded-4xl"
+            />
+
+            <Search
+               onClick={handleSearchRestros}
+               className="cursor-pointer"
+               size={36}
+            />
+         </div>
          <button
-            onClick={handleClick}
+            onClick={handleTopRatedRestros}
             className="border py-1 px-2 mt-8 rounded-2xl text-gray-500 shadow cursor-pointer"
          >
             Top Rated Restaurants
          </button>
 
          <div className="flex items-center justify-start flex-wrap gap-5 my-8">
-            {listOfRestaurants.map((restro) => (
+            {listOfFilteredRestros.map((restro) => (
                <RestroCard restroObj={restro} key={restro.info.id} />
             ))}
          </div>
