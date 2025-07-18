@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import SearchBar from './SearchBar.tsx';
 
 function Header() {
    const [isLogin, setIsLogin] = useState(false);
@@ -24,8 +23,6 @@ function Header() {
                </button>
             </div>
          </div>
-
-         <SearchBar />
       </>
    );
 }
