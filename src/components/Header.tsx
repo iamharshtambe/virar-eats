@@ -1,6 +1,13 @@
+import { useState } from 'react';
 import SearchBar from './SearchBar.tsx';
 
 function Header() {
+   const [isLogin, setIsLogin] = useState(false);
+
+   function handleClick() {
+      setIsLogin(!isLogin);
+   }
+
    return (
       <>
          <div className="flex items-center justify-between my-8">
@@ -9,6 +16,12 @@ function Header() {
                <a className="cursor-pointer">Home</a>
                <a className="cursor-pointer">About Us</a>
                <a className="cursor-pointer">Cart</a>
+               <button
+                  onClick={handleClick}
+                  className="border px-3 rounded-2xl shadow cursor-pointer"
+               >
+                  {isLogin ? 'Logout' : 'Login'}
+               </button>
             </div>
          </div>
 
