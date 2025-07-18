@@ -1,6 +1,6 @@
 import RestroCard from './RestroCard.tsx';
-import { restroData } from '../utils/constants.ts';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 type RestroInfo = {
    info: {
@@ -17,8 +17,26 @@ type RestroInfo = {
 };
 
 function RestroContainer() {
-   const [listOfRestaurants, setListOfRestaurants] =
-      useState<RestroInfo[]>(restroData);
+   const [listOfRestaurants, setListOfRestaurants] = useState<RestroInfo[]>([]);
+
+   async function fetchRestroData() {
+      try {
+         const response = await axios.get(
+            'https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.4563596&lng=72.79246119999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING'
+         );
+
+         setListOfRestaurants(
+            response?.data?.data?.cards[4]?.card?.card?.gridElements
+               ?.infoWithStyle?.restaurants
+         );
+      } catch (error) {
+         console.error('Error fetching data:', error);
+      }
+   }
+
+   useEffect(() => {
+      fetchRestroData();
+   }, []);
 
    function handleClick() {
       const filteredRestros = listOfRestaurants.filter(
