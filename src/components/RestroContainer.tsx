@@ -34,10 +34,10 @@ type Restaurants = {
 };
 
 function RestroContainer() {
-   const [listOfRestaurants, setListOfRestaurants] = useState<RestroInfo[]>([]);
-   const [listOfFilteredRestros, setListOfFilteredRestros] = useState<
-      RestroInfo[]
-   >([]);
+   const [restaurants, setRestaurants] = useState<RestroInfo[]>([]);
+   const [filteredRestaurants, setFilteredRestaurants] = useState<RestroInfo[]>(
+      []
+   );
    const [searchText, setSearchText] = useState('');
 
    async function fetchRestroData() {
@@ -46,12 +46,12 @@ function RestroContainer() {
             'https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.4563596&lng=72.79246119999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING'
          );
 
-         setListOfRestaurants(
+         setRestaurants(
             response?.data?.data?.cards[4]?.card?.card?.gridElements
                ?.infoWithStyle?.restaurants
          );
 
-         setListOfFilteredRestros(
+         setFilteredRestaurants(
             response?.data?.data?.cards[4]?.card?.card?.gridElements
                ?.infoWithStyle?.restaurants
          );
@@ -65,22 +65,22 @@ function RestroContainer() {
    }, []);
 
    function handleTopRatedRestros() {
-      const filteredRestros = listOfRestaurants.filter(
+      const filteredRestros = restaurants.filter(
          (restro) => restro.info.avgRating > 4.2
       );
 
-      setListOfFilteredRestros(filteredRestros);
+      setFilteredRestaurants(filteredRestros);
    }
 
    function handleSearchRestros() {
-      const filteredRestros = listOfRestaurants.filter((restro) =>
+      const filteredRestros = restaurants.filter((restro) =>
          restro.info.name.toLowerCase().includes(searchText.toLowerCase())
       );
 
-      setListOfFilteredRestros(filteredRestros);
+      setFilteredRestaurants(filteredRestros);
    }
 
-   return listOfRestaurants.length === 0 ? (
+   return restaurants.length === 0 ? (
       <div className="mt-20">Loading...</div>
    ) : (
       <>
@@ -107,7 +107,7 @@ function RestroContainer() {
          </button>
 
          <div className="flex items-center justify-start flex-wrap gap-5 my-8">
-            {listOfFilteredRestros.map((restro) => (
+            {filteredRestaurants.map((restro) => (
                <RestroCard restroObj={restro} key={restro.info.id} />
             ))}
          </div>
