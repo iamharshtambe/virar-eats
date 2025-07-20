@@ -22,6 +22,7 @@ type MenuItem = {
          id: string;
          name: string;
          imageId: string;
+         price: number;
       };
    };
 };
@@ -74,9 +75,11 @@ function RestroMenu() {
 
    const cardInfo = menu.data.cards[2]?.card?.card?.info;
 
-   const itemCards =
-      menu.data.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards?.[2]?.card
-         ?.card?.itemCards;
+   const itemCards = menu.data.cards
+      .find((card) => card?.groupedCard?.cardGroupMap?.REGULAR)
+      ?.groupedCard?.cardGroupMap?.REGULAR?.cards?.find(
+         (innerCard) => innerCard?.card?.card?.itemCards
+      )?.card?.card?.itemCards;
 
    if (!cardInfo) {
       return (
@@ -113,7 +116,7 @@ function RestroMenu() {
                itemCards.map((item) => (
                   <li
                      key={item.card.info.id}
-                     className="flex items-center gap-4 p-4 border border-gray-300 rounded-2xl"
+                     className="flex items-center  gap-4 p-4 border border-gray-300 rounded-2xl"
                   >
                      <img
                         className="p-1 w-18 h-18 object-cover border border-gray-300 rounded-full"
