@@ -2,6 +2,7 @@ import RestroCard from './RestroCard.tsx';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Search } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 type RestroInfo = {
    info: {
@@ -108,7 +109,9 @@ function RestroContainer() {
 
          <div className="flex items-center justify-start flex-wrap gap-5 my-8">
             {filteredRestaurants.map((restro) => (
-               <RestroCard restroObj={restro} key={restro.info.id} />
+               <Link key={restro.info.id} to={`restaurants/${restro.info.id}`}>
+                  <RestroCard restroObj={restro} />
+               </Link>
             ))}
          </div>
       </>
