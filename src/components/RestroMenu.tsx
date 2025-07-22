@@ -1,73 +1,15 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { MENU_IMG_URL, MENU_URL } from '../utils/constants';
-
-type RestroInfo = {
-   id?: string;
-   name: string;
-   areaName: string;
-   cuisines: string[];
-   avgRating: number;
-   sla: {
-      deliveryTime: number;
-   };
-   totalRatingsString: string;
-   costForTwoMessage: string;
-};
-
-type MenuItem = {
-   card: {
-      info: {
-         id: string;
-         name: string;
-         imageId: string;
-         price: number;
-      };
-   };
-};
-
-type Menu = {
-   data: {
-      cards: {
-         card?: {
-            card?: {
-               info?: RestroInfo;
-            };
-         };
-         groupedCard?: {
-            cardGroupMap?: {
-               REGULAR?: {
-                  cards?: {
-                     card?: {
-                        card?: {
-                           itemCards?: MenuItem[];
-                        };
-                     };
-                  }[];
-               };
-            };
-         };
-      }[];
-   };
-};
+import { MENU_IMG_URL } from '../utils/constants';
+import { useMenu } from '../hooks/useMenu.ts';
 
 function RestroMenu() {
-   const [menu, setMenu] = useState<Menu | null>(null);
-   const { restroId } = useParams();
+   const { restroId } = useParams<{ restroId: string }>();
 
-   useEffect(() => {
-      async function fetchMenuData() {
-         try {
-            const response = await axios.get<Menu>(`${MENU_URL}${restroId}`);
-            setMenu(response.data);
-         } catch (error) {
-            console.error('Error fetching menu:', error);
-         }
-      }
+   const menu = useMenu(restroId);
 
-      fetchMenuData();
-   }, [restroId]);
+   if (!restroId) {
+      return <div className="mt-20 text-red-500">Invalid restaurant ID</div>;
+   }
 
    if (!menu) return <div className="mt-20">Loading...</div>;
 

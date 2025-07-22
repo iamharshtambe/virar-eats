@@ -1,68 +1,15 @@
 import RestroCard from './RestroCard.tsx';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
 import { Search } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { RESTAURANTS_LIST_URL } from '../utils/constants.ts';
-
-type RestroInfo = {
-   info: {
-      id?: string;
-      name: string;
-      cloudinaryImageId: string;
-      areaName: string;
-      cuisines: string[];
-      avgRating: number;
-      sla: {
-         deliveryTime: number;
-      };
-   };
-};
-
-type Restaurants = {
-   data: {
-      cards: {
-         card: {
-            card: {
-               gridElements: {
-                  infoWithStyle: {
-                     restaurants: RestroInfo[];
-                  };
-               };
-            };
-         };
-      }[];
-   };
-};
+import { useRestaurants } from '../hooks/useRestaurants.ts';
+import { useStatus } from '../hooks/useStatus.ts';
 
 function RestroContainer() {
-   const [restaurants, setRestaurants] = useState<RestroInfo[]>([]);
-   const [filteredRestaurants, setFilteredRestaurants] = useState<RestroInfo[]>(
-      []
-   );
+   const { restaurants, filteredRestaurants, setFilteredRestaurants } =
+      useRestaurants();
    const [searchText, setSearchText] = useState('');
-
-   async function fetchRestroData() {
-      try {
-         const response = await axios.get<Restaurants>(RESTAURANTS_LIST_URL);
-
-         setRestaurants(
-            response?.data?.data?.cards[4]?.card?.card?.gridElements
-               ?.infoWithStyle?.restaurants
-         );
-
-         setFilteredRestaurants(
-            response?.data?.data?.cards[4]?.card?.card?.gridElements
-               ?.infoWithStyle?.restaurants
-         );
-      } catch (error) {
-         console.error('Error fetching data:', error);
-      }
-   }
-
-   useEffect(() => {
-      fetchRestroData();
-   }, []);
+   const status = useStatus();
 
    function handleTopRatedRestros() {
       const filteredRestros = restaurants.filter(
@@ -79,6 +26,13 @@ function RestroContainer() {
 
       setFilteredRestaurants(filteredRestros);
    }
+
+   if (status === false)
+      return (
+         <h2 className="mt-20 text-red-500 font-bold text-2xl">
+            😵‍💫 Looks like you are offline, please check your internet connection
+         </h2>
+      );
 
    return restaurants.length === 0 ? (
       <div className="mt-20">Loading...</div>
