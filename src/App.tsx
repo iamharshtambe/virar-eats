@@ -1,14 +1,14 @@
-import './index.css';
-import Header from './components/Header.tsx';
-import { Outlet } from 'react-router-dom';
+import "./index.css";
+import Header from "./components/Header.tsx";
+import { Outlet } from "react-router-dom";
 
 function App() {
-   return (
-      <div className="max-w-screen-xl mx-auto px-10 bg">
-         <Header />
-         <Outlet />
-      </div>
-   );
+  return (
+    <div className="bg mx-auto max-w-screen-xl px-10">
+      <Header />
+      <Outlet />
+    </div>
+  );
 }
 
 export default App;
