@@ -13,11 +13,11 @@ function Header() {
          <div className="flex items-center justify-between my-8">
             <h1 className="font-mysoul text-5xl cursor-pointer">Virar Eats</h1>
             <div className="flex gap-20 text-lg">
-               <Link to="/">
-                  <a className="cursor-pointer">Home</a>
+               <Link className="cursor-pointer" to="/">
+                  Home
                </Link>
-               <Link to="/about">
-                  <a className="cursor-pointer">About Us</a>
+               <Link className="cursor-pointer" to="/about">
+                  About Us
                </Link>
                <a className="cursor-pointer">Cart</a>
                <button

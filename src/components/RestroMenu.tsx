@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { MENU_IMG_URL } from '../utils/constants';
+import { MENU_IMG_URL, MENU_URL } from '../utils/constants';
 
 type RestroInfo = {
    id?: string;
@@ -59,9 +59,7 @@ function RestroMenu() {
    useEffect(() => {
       async function fetchMenuData() {
          try {
-            const response = await axios.get<Menu>(
-               `https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=19.4563596&lng=72.79246119999999&restaurantId=${restroId}&catalog_qa=undefined&submitAction=ENTER`
-            );
+            const response = await axios.get<Menu>(`${MENU_URL}${restroId}`);
             setMenu(response.data);
          } catch (error) {
             console.error('Error fetching menu:', error);

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Search } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { RESTAURANTS_LIST_URL } from '../utils/constants.ts';
 
 type RestroInfo = {
    info: {
@@ -43,9 +44,7 @@ function RestroContainer() {
 
    async function fetchRestroData() {
       try {
-         const response = await axios.get<Restaurants>(
-            'https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.4563596&lng=72.79246119999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING'
-         );
+         const response = await axios.get<Restaurants>(RESTAURANTS_LIST_URL);
 
          setRestaurants(
             response?.data?.data?.cards[4]?.card?.card?.gridElements
