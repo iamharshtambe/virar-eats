@@ -4,12 +4,15 @@ import { Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useRestaurants } from "../hooks/useRestaurants.ts";
 import { useStatus } from "../hooks/useStatus.ts";
+import { withPromoted } from "../utils/withPromoted.tsx";
 
 function RestroContainer() {
   const { restaurants, filteredRestaurants, setFilteredRestaurants } =
     useRestaurants();
   const [searchText, setSearchText] = useState("");
   const status = useStatus();
+
+  const PromotedRestroCard = withPromoted(RestroCard);
 
   function handleTopRatedRestros() {
     const filteredRestros = restaurants.filter(
@@ -63,7 +66,11 @@ function RestroContainer() {
       <div className="my-8 flex flex-wrap items-center justify-start gap-5">
         {filteredRestaurants.map((restro) => (
           <Link key={restro.info.id} to={`restaurants/${restro.info.id}`}>
-            <RestroCard restroObj={restro} />
+            {restro.info.avgRating > 4.2 ? (
+              <PromotedRestroCard restroObj={restro} />
+            ) : (
+              <RestroCard restroObj={restro} />
+            )}
           </Link>
         ))}
       </div>

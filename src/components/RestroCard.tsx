@@ -13,7 +13,7 @@ type RestroInfo = {
   };
 };
 
-type RestroCardProps = {
+export type RestroCardProps = {
   restroObj: RestroInfo;
 };
 
@@ -22,7 +22,7 @@ function RestroCard({ restroObj }: RestroCardProps) {
     restroObj.info;
 
   return (
-    <div className="h-70 w-56 transition-transform duration-300 hover:scale-105">
+    <div className="h-70 w-56 transition-transform duration-300">
       <img
         src={IMG_URL + cloudinaryImageId}
         alt=""
