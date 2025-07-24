@@ -20,8 +20,20 @@ type MenuItem = {
     info: {
       id: string;
       name: string;
+      description?: string;
+      defaultPrice?: number;
+      price?: number;
       imageId: string;
-      price: number;
+    };
+  };
+};
+
+type MenuCard = {
+  card?: {
+    card?: {
+      "@type"?: string;
+      title?: string;
+      itemCards?: MenuItem[];
     };
   };
 };
@@ -37,13 +49,7 @@ type Menu = {
       groupedCard?: {
         cardGroupMap?: {
           REGULAR?: {
-            cards?: {
-              card?: {
-                card?: {
-                  itemCards?: MenuItem[];
-                };
-              };
-            }[];
+            cards?: MenuCard[];
           };
         };
       };
