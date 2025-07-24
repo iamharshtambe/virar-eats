@@ -41,11 +41,11 @@ function RestroMenu() {
   return (
     <div className="mt-10 px-4">
       <p className="text-2xl font-bold">{name}</p>
-      <div className="mt-6 h-30 w-1/2 rounded-2xl border border-gray-300 p-2 shadow-lg">
-        <p className="font-bold">
+      <div className="mt-6 w-full rounded-2xl border border-gray-300 p-2 shadow-lg">
+        <p className="text-lg font-bold">
           ⭐ {avgRating} ({totalRatingsString}) | {costForTwoMessage}
         </p>
-        <p className="text-orange-600">{cuisines.join(", ")}</p>
+        <p className="text-lg text-orange-600">{cuisines.join(", ")}</p>
         <div className="mt-2">
           <p className="text-sm">Outlet: {areaName}</p>
           <p className="text-sm">⏱ {sla.deliveryTime} mins</p>
