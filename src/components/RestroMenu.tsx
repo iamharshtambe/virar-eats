@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
-import { MENU_IMG_URL } from "../utils/constants";
 import { useMenu } from "../hooks/useMenu.ts";
+import MenuAccordian from "./MenuAccordian.tsx";
 
 function RestroMenu() {
   const { restroId } = useParams<{ restroId: string }>();
@@ -15,11 +15,12 @@ function RestroMenu() {
 
   const cardInfo = menu.data.cards[2]?.card?.card?.info;
 
-  const itemCards = menu.data.cards
-    .find((card) => card?.groupedCard?.cardGroupMap?.REGULAR)
-    ?.groupedCard?.cardGroupMap?.REGULAR?.cards?.find(
-      (innerCard) => innerCard?.card?.card?.itemCards,
-    )?.card?.card?.itemCards;
+  const menuCategories =
+    menu?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards?.filter(
+      (card) =>
+        card?.card?.card?.["@type"] ===
+        "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory",
+    );
 
   if (!cardInfo) {
     return (
@@ -50,26 +51,13 @@ function RestroMenu() {
           <p className="text-sm">⏱ {sla.deliveryTime} mins</p>
         </div>
       </div>
-      <p className="mt-6 text-xl font-semibold">Our Menu</p>
-      <ul className="mt-4 space-y-4">
-        {itemCards?.length ? (
-          itemCards.map((item) => (
-            <li
-              key={item.card.info.id}
-              className="flex items-center gap-4 rounded-2xl border border-gray-300 p-4"
-            >
-              <img
-                className="h-18 w-18 rounded-full border border-gray-300 object-cover p-1"
-                src={MENU_IMG_URL + item.card.info.imageId}
-                alt={item.card.info.name}
-              />
-              <span className="text-lg font-medium">{item.card.info.name}</span>
-            </li>
-          ))
-        ) : (
-          <p className="text-gray-500">No items found</p>
-        )}
-      </ul>
+      <p className="mt-6 text-2xl font-bold">Our Menu</p>
+      {menuCategories?.map((item) => (
+        <MenuAccordian
+          key={item.card?.card?.title || Math.random()}
+          data={item.card?.card}
+        />
+      ))}
     </div>
   );
 }

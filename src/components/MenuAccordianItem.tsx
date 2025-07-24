@@ -1,0 +1,56 @@
+import { MENU_IMG_URL } from "../utils/constants";
+
+type MenuItemData = {
+  card: {
+    info: {
+      id: string;
+      name: string;
+      description?: string;
+      defaultPrice?: number;
+      price?: number;
+      imageId: string;
+    };
+  };
+}[];
+
+type MenuAccordianItemProps = {
+  data: MenuItemData;
+};
+
+function MenuAccordianItem({ data }: MenuAccordianItemProps) {
+  return (
+    <div>
+      {data.map((item, index) => {
+        const { name, description, defaultPrice, price, imageId } =
+          item.card.info;
+
+        const finalPrice =
+          (defaultPrice ?? price) ? (defaultPrice ?? price)! / 100 : 0;
+
+        return (
+          <div
+            key={item.card.info.id || index}
+            className="my-8 flex items-center justify-between gap-6"
+          >
+            <div className="flex-1">
+              <p className="font-bold">{name}</p>
+              <p>₹{finalPrice}</p>
+              {description && <p className="text-gray-500">{description}</p>}
+            </div>
+            <div className="flex-shrink-0">
+              {imageId && (
+                <img
+                  className="h-32 w-32 rounded-lg object-cover"
+                  src={MENU_IMG_URL + imageId}
+                  alt={name}
+                />
+              )}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+export default MenuAccordianItem;
