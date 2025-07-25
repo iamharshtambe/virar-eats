@@ -40,7 +40,7 @@ function MenuAccordianItem({ data }: MenuAccordianItemProps) {
             <div className="flex-shrink-0">
               {imageId && (
                 <img
-                  className="h-32 w-32 rounded-lg object-cover"
+                  className="h-24 w-24 rounded-lg object-cover"
                   src={MENU_IMG_URL + imageId}
                   alt={name}
                 />
