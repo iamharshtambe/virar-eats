@@ -40,11 +40,14 @@ function MenuAccordianItem({ data }: MenuAccordianItemProps) {
             <div className="flex-shrink-0">
               {imageId && (
                 <img
-                  className="h-24 w-24 rounded-lg object-cover"
+                  className="relative h-24 w-24 rounded-lg object-cover"
                   src={MENU_IMG_URL + imageId}
                   alt={name}
                 />
               )}
+              <button className="absolute mt-1 ml-5 h-6 w-14 rounded-2xl bg-black px-1 text-center text-sm text-white">
+                Add +
+              </button>
             </div>
           </div>
         );
