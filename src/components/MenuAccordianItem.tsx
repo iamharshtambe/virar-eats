@@ -40,7 +40,7 @@ function MenuAccordianItem({ data }: MenuAccordianItemProps) {
         return (
           <div
             key={item.card.info.id || index}
-            className="my-8 flex items-center justify-between gap-6"
+            className="my-12 flex items-center justify-between gap-6"
           >
             <div className="flex-1">
               <p className="font-bold">{name}</p>
