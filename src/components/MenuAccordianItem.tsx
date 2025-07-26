@@ -1,4 +1,6 @@
-import { MENU_IMG_URL } from "../utils/constants";
+import { useDispatch } from "react-redux";
+import { MENU_IMG_URL } from "../utils/constants.ts";
+import { addItem } from "../store/cartSlice.ts";
 
 type MenuItemData = {
   card: {
@@ -18,6 +20,12 @@ type MenuAccordianItemProps = {
 };
 
 function MenuAccordianItem({ data }: MenuAccordianItemProps) {
+  const dispatch = useDispatch();
+
+  function handleClick() {
+    dispatch(addItem("pizza"));
+  }
+
   return (
     <div>
       {data.map((item, index) => {
@@ -45,7 +53,10 @@ function MenuAccordianItem({ data }: MenuAccordianItemProps) {
                   alt={name}
                 />
               )}
-              <button className="absolute mt-1 ml-5 h-6 w-14 rounded-2xl bg-black px-1 text-center text-sm text-white">
+              <button
+                className="absolute mt-1 ml-5 h-6 w-14 cursor-pointer rounded-2xl bg-black px-1 text-center text-sm text-white"
+                onClick={handleClick}
+              >
                 Add +
               </button>
             </div>
