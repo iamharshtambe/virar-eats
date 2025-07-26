@@ -1,6 +1,17 @@
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-type Item = string;
+type Item = {
+  card: {
+    info: {
+      id: string;
+      name: string;
+      description?: string;
+      defaultPrice?: number;
+      price?: number;
+      imageId: string;
+    };
+  };
+};
 
 type CartState = {
   items: Item[];

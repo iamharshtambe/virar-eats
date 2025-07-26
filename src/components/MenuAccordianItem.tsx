@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { MENU_IMG_URL } from "../utils/constants.ts";
 import { addItem } from "../store/cartSlice.ts";
 
-type MenuItemData = {
+type MenuItem = {
   card: {
     info: {
       id: string;
@@ -13,17 +13,19 @@ type MenuItemData = {
       imageId: string;
     };
   };
-}[];
+};
 
-type MenuAccordianItemProps = {
+type MenuItemData = MenuItem[];
+
+export type MenuAccordianItemProps = {
   data: MenuItemData;
 };
 
 function MenuAccordianItem({ data }: MenuAccordianItemProps) {
   const dispatch = useDispatch();
 
-  function handleClick() {
-    dispatch(addItem("pizza"));
+  function handleClick(item: MenuItem) {
+    dispatch(addItem(item));
   }
 
   return (
@@ -55,7 +57,7 @@ function MenuAccordianItem({ data }: MenuAccordianItemProps) {
               )}
               <button
                 className="absolute mt-1 ml-5 h-6 w-14 cursor-pointer rounded-2xl bg-black px-1 text-center text-sm text-white"
-                onClick={handleClick}
+                onClick={() => handleClick(item)}
               >
                 Add +
               </button>

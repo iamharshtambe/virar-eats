@@ -26,9 +26,11 @@ function Header() {
           <Link className="cursor-pointer" to="/about">
             About Us
           </Link>
-          <span className="inline-flex items-center gap-1">
-            <ShoppingCart className="h-5 w-5" /> ({cartItems.length})
-          </span>
+          <Link to="/cart">
+            <span className="inline-flex items-center gap-1">
+              <ShoppingCart className="h-5 w-5" /> ({cartItems.length})
+            </span>
+          </Link>
 
           <button
             onClick={handleClick}
