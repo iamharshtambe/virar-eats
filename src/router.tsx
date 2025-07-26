@@ -4,6 +4,7 @@ import RestroContainer from "./components/RestroContainer";
 import About from "./components/About";
 import RestroMenu from "./components/RestroMenu";
 import Error from "./components/Error.tsx";
+import Cart from "./components/Cart.tsx";
 
 export const appRouter = createBrowserRouter([
   {
@@ -19,8 +20,12 @@ export const appRouter = createBrowserRouter([
         element: <About />,
       },
       {
-        path: "restaurants/:restroId",
+        path: "/restaurants/:restroId",
         element: <RestroMenu />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
       },
     ],
     errorElement: <Error />,
