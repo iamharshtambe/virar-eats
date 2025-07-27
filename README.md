@@ -33,7 +33,7 @@ A modern food delivery web application showcasing famous restaurants in Virar an
 1. Clone the repository
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/iamharshtambe/virar-eats
 cd virar-eats
 ```
 
