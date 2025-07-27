@@ -43,15 +43,12 @@ export function useRestaurants() {
       try {
         const response = await axios.get<Restaurants>(RESTAURANTS_LIST_URL);
 
-        setRestaurants(
+        const restaurantsData =
           response?.data?.data?.cards[4]?.card?.card?.gridElements
-            ?.infoWithStyle?.restaurants,
-        );
+            ?.infoWithStyle?.restaurants ?? [];
 
-        setFilteredRestaurants(
-          response?.data?.data?.cards[4]?.card?.card?.gridElements
-            ?.infoWithStyle?.restaurants,
-        );
+        setRestaurants(restaurantsData);
+        setFilteredRestaurants(restaurantsData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
